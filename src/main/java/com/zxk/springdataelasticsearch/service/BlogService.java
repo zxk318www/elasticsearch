@@ -12,6 +12,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @program: spring-data-elasticsearch
@@ -52,5 +53,18 @@ public class BlogService {
         pageModel.setPageSize(pageSize);
         Page<BlogModel> blogModelPage = blogRepository.findAll(pageModel);
         return Result.ok(blogModelPage);
+    }
+
+
+    public Result<BlogModel> findById(String id){
+        if (StringUtils.isEmpty(id)){
+            return Result.error("参数不正确");
+        }
+        Optional<BlogModel> byId = blogRepository.findById(id);
+        if (byId.isPresent()){
+            BlogModel blogModel = byId.get();
+            return Result.ok(blogModel);
+        }
+        return Result.ok("未查询到数据");
     }
 }

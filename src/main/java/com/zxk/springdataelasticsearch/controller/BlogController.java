@@ -38,7 +38,7 @@ public class BlogController {
     }
 
     /**
-     *  翻页查询
+     *  翻页查询 xxx/page?pageIndex={pageIndex}&pageSize={pageSize}
      * @param pageIndex 页数
      * @param pageSize 每页查询数量
      * @return
@@ -46,5 +46,36 @@ public class BlogController {
     @GetMapping("/page")
     public Result<Page<BlogModel>> pageQuery(Integer pageIndex,Integer pageSize){
         return blogService.pageQuery(pageIndex,pageSize);
+    }
+
+    /**
+     * 分页查询，路径参数 xxx/page/{pageIndex}/{pageSize}
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/page/{pageIndex}/{pageSize}")
+    public Result<Page<BlogModel>> pagePathValueQuery(@PathVariable Integer pageIndex,@PathVariable Integer pageSize){
+        return blogService.pageQuery(pageIndex, pageSize);
+    }
+
+    /**
+     * 根据id查询 xxx/findById?id={id}
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById")
+    public Result<BlogModel> findById(String id){
+        return blogService.findById(id);
+    }
+
+    /**
+     * 根据路径id查询 xxx/findById/{id}
+     * @param id
+     * @return
+     */
+    @GetMapping("/findById/{id}")
+    public Result<BlogModel> findByPathId(@PathVariable String id){
+        return blogService.findById(id);
     }
 }
