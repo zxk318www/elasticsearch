@@ -115,4 +115,36 @@ public class BlogService {
         Page<BlogModel> page = blogRepository.pageTitleLike(search,pageModel);
         return Result.ok("分页查询成功",page);
     }
+
+
+    public Result<Page<BlogModel>> pageContent(String search,int pageIndex,int pageSize){
+        if (StringUtils.isEmpty(search)){
+            return Result.error("分页查询参数不正确");
+        }
+        if (StringUtils.isEmpty(pageIndex)){
+            pageIndex = 0;
+        }
+        if (StringUtils.isEmpty(pageSize)){
+            pageSize = 10;
+        }
+        PageModel pageModel = new PageModel(pageIndex,pageSize);
+        Page<BlogModel> page = blogRepository.pageContentLike(search,pageModel);
+        return Result.ok("分页查询成功",page);
+    }
+
+    public Result<Page<BlogModel>> querySearch(String search,int pageIndex,int pageSize){
+        if (StringUtils.isEmpty(search)){
+            return Result.error("查询参数不能为空");
+        }
+        if (StringUtils.isEmpty(pageIndex)){
+            pageIndex = 0;
+        }
+        if (StringUtils.isEmpty(pageSize)){
+            pageSize = 10;
+        }
+
+        PageModel pageModel = new PageModel(pageIndex,pageSize);
+        Page<BlogModel> page = blogRepository.pageLike(search,pageModel);
+        return Result.ok("分页查询成功",page);
+    }
 }

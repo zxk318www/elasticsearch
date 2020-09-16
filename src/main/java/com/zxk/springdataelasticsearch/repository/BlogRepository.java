@@ -31,4 +31,16 @@ public interface BlogRepository extends ElasticsearchRepository<BlogModel,Long> 
      */
     @Query("{\"match_phrase\":{\"title\":\"?0\"}}")
     Page<BlogModel> pageTitleLike(String search, PageModel pageModel);
+
+    /**
+     * 根据查询  分页查询内容
+     * @param search
+     * @param pageModel
+     * @return
+     */
+    @Query("{\"match_phrase\":{\"content\":\"?0\"}}")
+    Page<BlogModel> pageContentLike(String search, PageModel pageModel);
+
+    @Query("{\"multi_match\":{\"query\":\"?0\",\"fields\": [\"content\",\"title\"]}}")
+    Page<BlogModel> pageLike(String search, PageModel pageModel);
 }

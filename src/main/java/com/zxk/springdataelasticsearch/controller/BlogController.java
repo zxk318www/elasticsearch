@@ -109,7 +109,7 @@ public class BlogController {
 
 
     /**
-     * 根据标题模糊查询
+     * 根据标题精准模糊查询
      * @param search
      * @return
      */
@@ -127,7 +127,7 @@ public class BlogController {
 
 
     /**
-     * 根据标题分页模糊查询
+     * 根据标题分页精准模糊查询
      * @param search
      * @return
      */
@@ -141,5 +141,40 @@ public class BlogController {
     public Result<Page<BlogModel>> pagePathTitle(@PathVariable String search,@PathVariable int pageIndex,@PathVariable int pageSize){
         System.out.println(search);
         return blogService.pageTitle(search,pageIndex,pageSize);
+    }
+
+    /**
+     * 根据内容分页精准模糊查询
+     * @param search
+     * @return
+     */
+    @GetMapping("/pageContent")
+    public Result<Page<BlogModel>> pageContent(String search,int pageIndex,int pageSize){
+        System.out.println(search);
+        return blogService.pageContent(search,pageIndex,pageSize);
+    }
+
+    @GetMapping("/pageContent/{search}/{pageIndex}/{pageSize}")
+    public Result<Page<BlogModel>> pagePathContent(@PathVariable String search,@PathVariable int pageIndex,@PathVariable int pageSize){
+        System.out.println(search);
+        return blogService.pageContent(search,pageIndex,pageSize);
+    }
+
+    /**
+     * 根据查询 内容 分页精准模糊查询（title,content）
+     * @param search
+     * @param pageIndex
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/pageSearch")
+    public Result<Page<BlogModel>> pageSearch(String search,int pageIndex,int pageSize){
+        System.out.println(search);
+        return blogService.querySearch(search,pageIndex,pageSize);
+    }
+    @GetMapping("/pageSearch/{search}/{pageIndex}/{pageSize}")
+    public Result<Page<BlogModel>> pagePathSearch(@PathVariable String search,@PathVariable int pageIndex,@PathVariable int pageSize){
+        System.out.println(search);
+        return blogService.querySearch(search,pageIndex,pageSize);
     }
 }
