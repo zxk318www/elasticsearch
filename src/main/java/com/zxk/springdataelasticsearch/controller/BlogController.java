@@ -78,4 +78,33 @@ public class BlogController {
     public Result<BlogModel> findByPathId(@PathVariable String id){
         return blogService.findById(id);
     }
+
+    /**
+     * 根据id更新Document
+     * @param blogModel
+     * @return
+     */
+    @PostMapping("/updateById")
+    public Result updateById(@RequestBody BlogModel blogModel){
+        System.out.println(blogModel);
+        return blogService.updateById(blogModel);
+    }
+
+    /**
+     * 根据id删除document
+     * @param id
+     * @return
+     */
+    @DeleteMapping("/delete")
+    public Result deleteById(String id){
+        System.out.println(id);
+        return blogService.deleteById(id);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result deleteByPathId(@PathVariable  String id){
+        System.out.println(id);
+        return blogService.deleteById(id);
+    }
+
 }

@@ -67,4 +67,31 @@ public class BlogService {
         }
         return Result.ok("未查询到数据");
     }
+
+
+    public Result updateById(BlogModel blogModel){
+        if (blogModel.getId()!=null){
+            Result<BlogModel> result = findById(String.valueOf(blogModel.getId()));
+            if (result.isSuccess() && result.getResult()!=null){
+                blogRepository.save(blogModel);
+                return Result.ok("更新成功");
+            }else {
+                return result;
+            }
+        }
+        return Result.error("参数不正确");
+    }
+
+    public Result deleteById(String id){
+        if (StringUtils.isEmpty(id)){
+            return Result.error("参数不正确");
+        }
+        Result<BlogModel> result = findById(id);
+        if (result.isSuccess() && result.getResult()!=null){
+            blogRepository.deleteById(id);
+            return Result.ok("删除成功");
+        }
+        return result;
+
+    }
 }

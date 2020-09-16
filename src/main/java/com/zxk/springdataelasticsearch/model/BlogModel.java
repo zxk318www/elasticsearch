@@ -18,7 +18,7 @@ import java.io.Serializable;
 public class BlogModel implements Serializable {
     private static final long serialVersionUID = -1933808051190771324L;
 
-    private long id;
+    private Long id;
 
     private String title;
 
