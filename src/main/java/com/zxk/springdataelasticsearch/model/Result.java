@@ -102,6 +102,15 @@ public class Result<T> implements Serializable {
         return r;
     }
 
+    public static <T> Result<T> ok(String msg,T data) {
+        Result<T> r = new Result<>();
+        r.setSuccess(true);
+        r.setCode(200);
+        r.setMessage(msg);
+        r.setResult(data);
+        return r;
+    }
+
     public String toJson() {
         return JSON.toJSONString(this);
     }

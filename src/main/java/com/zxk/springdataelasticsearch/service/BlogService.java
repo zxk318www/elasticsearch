@@ -74,7 +74,7 @@ public class BlogService {
             Result<BlogModel> result = findById(String.valueOf(blogModel.getId()));
             if (result.isSuccess() && result.getResult()!=null){
                 blogRepository.save(blogModel);
-                return Result.ok("更新成功");
+                return Result.ok("更新成功",blogModel.getId());
             }else {
                 return result;
             }
@@ -89,7 +89,7 @@ public class BlogService {
         Result<BlogModel> result = findById(id);
         if (result.isSuccess() && result.getResult()!=null){
             blogRepository.deleteById(id);
-            return Result.ok("删除成功");
+            return Result.ok("删除成功",id);
         }
         return result;
 
