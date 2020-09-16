@@ -3,6 +3,8 @@ package com.zxk.springdataelasticsearch.model;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 import java.io.Serializable;
 
@@ -20,7 +22,9 @@ public class BlogModel implements Serializable {
 
     private Long id;
 
+    @Field(type = FieldType.Text,analyzer = "ik_smart",searchAnalyzer = "ik_smart")
     private String title;
 
+    @Field(type = FieldType.Text,analyzer = "ik_smart",searchAnalyzer = "ik_smart")
     private String content;
 }
