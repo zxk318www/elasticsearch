@@ -70,4 +70,12 @@ public class PageModel implements Pageable {
     public boolean hasPrevious() {
         return false;
     }
+
+    public PageModel(int pageNumber, int pageSize) {
+        this.pageNumber = pageNumber;
+        this.pageSize = pageSize;
+    }
+
+    public PageModel() {
+    }
 }

@@ -48,15 +48,13 @@ public class BlogService {
         if (pageSize == null){
             pageSize = 10;
         }
-        PageModel pageModel = new PageModel();
-        pageModel.setPageNumber(pageIndex);
-        pageModel.setPageSize(pageSize);
+        PageModel pageModel = new PageModel(pageIndex,pageSize);
         Page<BlogModel> blogModelPage = blogRepository.findAll(pageModel);
         return Result.ok(blogModelPage);
     }
 
 
-    public Result<BlogModel> findById(String id){
+    public Result<BlogModel> findById(Long id){
         if (StringUtils.isEmpty(id)){
             return Result.error("参数不正确");
         }
@@ -70,8 +68,8 @@ public class BlogService {
 
 
     public Result updateById(BlogModel blogModel){
-        if (blogModel.getId()!=null){
-            Result<BlogModel> result = findById(String.valueOf(blogModel.getId()));
+        if (!StringUtils.isEmpty(blogModel.getId())){
+            Result<BlogModel> result = findById(blogModel.getId());
             if (result.isSuccess() && result.getResult()!=null){
                 blogRepository.save(blogModel);
                 return Result.ok("更新成功",blogModel.getId());
@@ -82,7 +80,7 @@ public class BlogService {
         return Result.error("参数不正确");
     }
 
-    public Result deleteById(String id){
+    public Result deleteById(Long id){
         if (StringUtils.isEmpty(id)){
             return Result.error("参数不正确");
         }
@@ -92,6 +90,29 @@ public class BlogService {
             return Result.ok("删除成功",id);
         }
         return result;
+    }
 
+
+    public Result<List<BlogModel>> findTitle(String search){
+        if (StringUtils.isEmpty(search)){
+            return Result.error("查询参数不正确");
+        }
+        List<BlogModel> list = blogRepository.findTitleLike(search);
+        return Result.ok("查询成功",list);
+    }
+
+    public Result<Page<BlogModel>> pageTitle(String search,int pageIndex,int pageSize){
+        if (StringUtils.isEmpty(search)){
+            return Result.error("分页查询参数不正确");
+        }
+        if (StringUtils.isEmpty(pageIndex)){
+            pageIndex = 0;
+        }
+        if (StringUtils.isEmpty(pageSize)){
+            pageSize = 10;
+        }
+        PageModel pageModel = new PageModel(pageIndex,pageSize);
+        Page<BlogModel> page = blogRepository.pageTitleLike(search,pageModel);
+        return Result.ok("分页查询成功",page);
     }
 }

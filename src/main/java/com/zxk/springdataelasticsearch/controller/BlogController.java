@@ -65,7 +65,7 @@ public class BlogController {
      * @return
      */
     @GetMapping("/findById")
-    public Result<BlogModel> findById(String id){
+    public Result<BlogModel> findById(Long id){
         return blogService.findById(id);
     }
 
@@ -75,7 +75,7 @@ public class BlogController {
      * @return
      */
     @GetMapping("/findById/{id}")
-    public Result<BlogModel> findByPathId(@PathVariable String id){
+    public Result<BlogModel> findByPathId(@PathVariable Long id){
         return blogService.findById(id);
     }
 
@@ -96,15 +96,50 @@ public class BlogController {
      * @return
      */
     @DeleteMapping("/delete")
-    public Result deleteById(String id){
+    public Result deleteById(Long id){
         System.out.println(id);
         return blogService.deleteById(id);
     }
 
     @DeleteMapping("/delete/{id}")
-    public Result deleteByPathId(@PathVariable  String id){
+    public Result deleteByPathId(@PathVariable  Long id){
         System.out.println(id);
         return blogService.deleteById(id);
     }
 
+
+    /**
+     * 根据标题模糊查询
+     * @param search
+     * @return
+     */
+    @GetMapping("/findTitle")
+    public Result<List<BlogModel>> findTitle(String search){
+        System.out.println(search);
+        return blogService.findTitle(search);
+    }
+
+    @GetMapping("/findTitle/{search}")
+    public Result<List<BlogModel>> findPathTitle(@PathVariable String search){
+        System.out.println(search);
+        return blogService.findTitle(search);
+    }
+
+
+    /**
+     * 根据标题分页模糊查询
+     * @param search
+     * @return
+     */
+    @GetMapping("/pageTitle")
+    public Result<Page<BlogModel>> pageTitle(String search,int pageIndex,int pageSize){
+        System.out.println(search);
+        return blogService.pageTitle(search,pageIndex,pageSize);
+    }
+
+    @GetMapping("/pageTitle/{search}/{pageIndex}/{pageSize}")
+    public Result<Page<BlogModel>> pagePathTitle(@PathVariable String search,@PathVariable int pageIndex,@PathVariable int pageSize){
+        System.out.println(search);
+        return blogService.pageTitle(search,pageIndex,pageSize);
+    }
 }
